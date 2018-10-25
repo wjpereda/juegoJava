@@ -1,5 +1,4 @@
 $(function(){
-//-----------------item #1-----cambio color titulo------------------------------
   setInterval(function(){
     var color=$(".main-titulo").css("color");
     if(color=="rgb(220, 255, 14)")
@@ -11,7 +10,6 @@ $(function(){
       $(".main-titulo").css("color","#DCFF0E");
     }
   },1000);
-//------------------------------------------------------------------------------
 })
 
 var rbh=0;
@@ -22,14 +20,14 @@ var lenres=["","","","","","",""];
 var maximo=0;
 var matriz=0;
 
-var intervalo=0;  //variable de tiempo para funcion de desplazamiento
-var eliminar=0;   //variable de tiempo para eliminar dulces
-var newdulces=0;  //variable de tiempo para nuevos dulces
-var tiempo=0;     //variable de tiempo para temporizador
+var intervalo=0;
+var eliminar=0;
+var newdulces=0;
+var tiempo=0;
 
 var i=0;
-var contador=0;  //contador total
-var conc1=0;    //contador columna1
+var contador=0;
+var conc1=0;
 
 var initialPos;
 var espera=0;
@@ -60,7 +58,7 @@ $(".btn-reinicio").click(function(){
   intervalo=setInterval(function(){desplazamiento()},600)
   tiempo=setInterval(function(){timer()},1000)
 })
-//----------funcion de contador a cero------------------------------------------
+
 function timer()
 {
   if(seg!=0)
@@ -83,12 +81,13 @@ function timer()
   }
   $("#timer").html("0"+min+":"+seg)
 }
-//------------------------------------------------------------------------------
+
+
 function callback()
 {
     $( ".panel-score" ).animate({width:'100%'},4000);
 }
-//----------Funcion de borrado--------------------------------------------------
+
 function borrartotal()
 {
   for(var j=1;j<8;j++)
@@ -96,7 +95,7 @@ function borrartotal()
     $(".col-"+j).children("img").detach();
   }
 }
-//---------------Funcion inicial para llenar el cuadro del juego----------------
+
 function desplazamiento()
 {
   i=i+1
@@ -118,30 +117,28 @@ function desplazamiento()
   }
   if(i==8)
   {
-    clearInterval(intervalo);   //desactivar funcion desplazamiento()
-    eliminar=setInterval(function(){eliminarhorver()},150)  //activar funcion eliminarhorver
+    clearInterval(intervalo);
+    eliminar=setInterval(function(){eliminarhorver()},150)
   }
 }
-//------------------------------------------------------------------------------
-//---------------Funcion para eliminar mas de 3 dulces--------------------------
 function eliminarhorver()
 {
   matriz=0;
-  rbh=horizontal()  //funcion busqueda dulces horizontal
-  rbv=vertical()    //funcion buscar dulces vertical
+  rbh=horizontal()
+  rbv=vertical()
 
   for(var j=1;j<8;j++)
   {
       matriz=matriz+$(".col-"+j).children().length;
   }
 
-  if(rbh==0 && rbv==0 && matriz!=49)  //condicion si no encuentra 3 dulces o mas llamar a funcion para volver a completar el uego
+  if(rbh==0 && rbv==0 && matriz!=49)
   {
       clearInterval(eliminar);
       bnewd=0;
       newdulces=setInterval(function()
       {
-        nuevosdulces()  //Funcion completar nuevos dulces
+        nuevosdulces()
       },600)
   }
   if(rbh==1 || rbv==1)
@@ -152,7 +149,7 @@ function eliminarhorver()
       var scoretmp=$(".activo").length;
       $(".activo").remove("img")
       score=score+scoretmp;
-      $("#score-text").html(score)  //Cambiar puntuacion
+      $("#score-text").html(score)
     })
   }
 
@@ -181,8 +178,8 @@ function eliminarhorver()
       do{
         espera=dropped.swap($(droppedOn));
       }while(espera==0)
-      rbh=horizontal()  //funcion busqueda dulces horizontal
-      rbv=vertical()    //funcion buscar dulces vertical
+      rbh=horizontal()
+      rbv=vertical()
       if(rbh==0 && rbv==0)
       {
         dropped.swap($(droppedOn));
@@ -190,14 +187,13 @@ function eliminarhorver()
       if(rbh==1 || rbv==1)
       {
         clearInterval(newdulces);
-        clearInterval(eliminar);   //desactivar funcion desplazamiento()
-        eliminar=setInterval(function(){eliminarhorver()},150)  //activar funcion eliminarhorver
+        clearInterval(eliminar);
+        eliminar=setInterval(function(){eliminarhorver()},150)
       }
     },
   });
 }
-//------------------------------------------------------------------------------
-//---------Funcion para intercambiar dulces-------------------------------------
+
 jQuery.fn.swap = function(b)
 {
     b = jQuery(b)[0];
@@ -208,12 +204,11 @@ jQuery.fn.swap = function(b)
     t.parentNode.removeChild(t);
     return this;
 };
-//------------------------------------------------------------------------------
-//---------Funcion de nuevos dulces---------------------------------------------
+
 function nuevosdulces()
 {
   $(".elemento").draggable({ disabled: true });
-  //alert("pase")
+
   $("div[class^='col']").css("justify-content","flex-start")
   for(var j=1;j<8;j++)
   {
@@ -268,8 +263,7 @@ function nuevosdulces()
   }
   contador=contador-1;
 }
-//------------------------------------------------------------------------------
-//----------funcion de busqueda horizontal de dulces----------------------------
+
 function horizontal()
 {
   var bh=0;
@@ -291,8 +285,7 @@ function horizontal()
   }
   return bh;
 }
-//------------------------------------------------------------------------------
-//----------Funcion de busqueda vertical de dulces------------------------------
+
 function vertical()
 {
   var bv=0;
